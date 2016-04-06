@@ -13,10 +13,16 @@
 		<section>
 		<form id="search-form" name="search-form" onsubmit="return search()">
 			<div class="field-container">
-				<input type="search" id="query" class="search-field" placeholder="Search YouTube"></input>
+				<input type="search" id="query" class="search-field" placeholder="Search YouTube">
+				<input type="submit" name="search-btn" id="search-btn" value="">
 			</div>
 		</form>
+		<ul id="results"></ul>
+		<div id="buttons"></div>
 		</section>
+		<footer>
+			<p>Copyright &copy; 2016, All Rights Reserved</p>
+		</footer>
 	</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
