@@ -1,76 +1,158 @@
-// Document ready function
+// Searchbar Handler
 $(function(){
-	searchBox();
-	search();
-});
-
-
-// Searchbar handler
-function searchBox(){
-	var searchField = $("#query"),
-		icon = $("#search-btn"),
-		speed = 400;
-
-	// Focus event handler
-	$(searchField).on("focus", function(){
+	var searchField = $('#query');
+	var icon = $('#search-btn');
+	
+	// Focus Event Handler
+	$(searchField).on('focus', function(){
 		$(this).animate({
-			width: '100%'
-		}, speed);
+			width:'100%'
+		},400);
 		$(icon).animate({
 			right: '10px'
-		}, speed);
+		}, 400);
 	});
-
-	// Blur event handler
-	$(searchField).on("blur", function(){
-		if(searchField.val() === ''){
-			$(this).animate({
-				width: '45%'
-			}, speed, function(){});
+	
+	// Blur Event Handler
+	$(searchField).on('blur', function(){
+		if(searchField.val() == ''){
+			$(searchField).animate({
+				width:'45%'
+			},400, function(){});
 			$(icon).animate({
-				right: '360px'
-			}, speed, function(){});
+				right:'360px'
+			},400, function(){});
 		}
 	});
-
-	$("#search-form").submit(function(e){
+	
+	$('#search-form').submit(function(e){
 		e.preventDefault();
-	})
+	});
+})
+
+
+function search(){
+	// Clear Results
+	$('#results').html('');
+	$('#buttons').html('');
+	
+	// Get Form Input
+	q = $('#query').val();
+	
+	// Run GET Request on API
+	$.get(
+		"https://www.googleapis.com/youtube/v3/search",{
+			part: 'snippet, id',
+			q: q,
+			type:'video',
+			key: 'AIzaSyCvk3NNMQASZgFkCNxIp9jH-l8O0PXhDUo'},
+			function(data){
+				var nextPageToken = data.nextPageToken;
+				var prevPageToken = data.prevPageToken;
+				
+				// Log Data
+				console.log(data);
+				
+				$.each(data.items, function(i, item){
+					// Get Output
+					var output = getOutput(item);
+					
+					// Display Results
+					$('#results').append(output);
+				});
+				
+				var buttons = getButtons(prevPageToken, nextPageToken);
+				
+				// Display Buttons
+				$('#buttons').append(buttons);
+			}
+	);
+}
+
+// Next Page Function
+function nextPage(){
+	var token = $('#next-button').data('token');
+	var q = $('#next-button').data('query');
+
+	// Clear Results
+	$('#results').html('');
+	$('#buttons').html('');
+	
+	// Get Form Input
+	q = $('#query').val();
+	
+	// Run GET Request on API
+	$.get(
+		"https://www.googleapis.com/youtube/v3/search",{
+			part: 'snippet, id',
+			q: q,
+			pageToken: token,
+			type:'video',
+			key: 'AIzaSyCvk3NNMQASZgFkCNxIp9jH-l8O0PXhDUo'},
+			function(data){
+				var nextPageToken = data.nextPageToken;
+				var prevPageToken = data.prevPageToken;
+				
+				// Log Data
+				console.log(data);
+				
+				$.each(data.items, function(i, item){
+					// Get Output
+					var output = getOutput(item);
+					
+					// Display Results
+					$('#results').append(output);
+				});
+				
+				var buttons = getButtons(prevPageToken, nextPageToken);
+				
+				// Display Buttons
+				$('#buttons').append(buttons);
+			}
+	);
 }
 
 
-// Function for the search results
-function search(){
-	// Clear the search results
-	$("#results").html("");
-	$("#buttons").html("");
+// Prev Page Function
+function prevPage(){
+	var token = $('#prev-button').data('token');
+	var q = $('#prev-button').data('query');
 
-	// Get for inputs
-	var q = $("#query").val();
-
-	// Run the GET request on the API
+	// Clear Results
+	$('#results').html('');
+	$('#buttons').html('');
+	
+	// Get Form Input
+	q = $('#query').val();
+	
+	// Run GET Request on API
 	$.get(
-	  "https://www.googleapis.com/youtube/v3/search",
-	  {
-	  	part: "snippet, id",
-	  	q: q,
-	  	type: 'video',
-	  	key: 'AIzaSyD7kMn9ppOz357PfAHvcAQ3rgNnvH8M2zQ'
-	  },
-	  	function(data){
-	  		var nextPageToken = data.nextPageToken;
-	  		var prevPageToken = data.prevPageToken;
-
-	  		console.log(data);
-
-	  		$.each(data.items, function(i, item){
-	  			// Get Output
-	  			var output = getOutput(item);
-
-	  			//Display Results
-	  			$("#results").append(output);
-	  		});
-	  }
+		"https://www.googleapis.com/youtube/v3/search",{
+			part: 'snippet, id',
+			q: q,
+			pageToken: token,
+			type:'video',
+			key: 'AIzaSyD7kMn9ppOz357PfAHvcAQ3rgNnvH8M2zQ'},
+			function(data){
+				var nextPageToken = data.nextPageToken;
+				var prevPageToken = data.prevPageToken;
+				
+				// Log Data
+				console.log(data);
+				
+				$.each(data.items, function(i, item){
+					// Get Output
+					var output = getOutput(item);
+					
+					// Display Results
+					$('#results').append(output);
+				});
+				
+				var buttons = getButtons(prevPageToken, nextPageToken);
+				
+				// Display Buttons
+				$('#buttons').append(buttons);
+			}
 	);
 }
 
