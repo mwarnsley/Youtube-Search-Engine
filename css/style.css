@@ -82,6 +82,7 @@ footer{
 	color: #ccc;
 	display: block;
 	font-size: 1.6em;
+	outline: 0;
 	padding: 11px 43px 11px 7px;
 	width: 45%;
 }

@@ -1,10 +1,11 @@
 // Document ready function
 $(function(){
+	searchBox();
 	search();
 });
 
 // Searchbar handler
-function search(){
+function searchBox(){
 	var searchField = $("#query"),
 		icon = $("#search-btn"),
 		speed = 400;
@@ -30,4 +31,42 @@ function search(){
 			}, speed, function(){});
 		}
 	});
+
+	$("#search-form").submit(function(e){
+		e.preventDefault();
+	})
+}
+
+function search(){
+	// Clear the search results
+	$("#results").html("");
+	$("#buttons").html("");
+
+	// Get for inputs
+	var q = $("#query").val();
+
+	// Run the GET request on the API
+	$.get(
+	  "https://www.googleapis.com/youtube/v3/search",
+	  {
+	  	part: "snippet, id",
+	  	q: q,
+	  	type: 'video',
+	  	key: 'AIzaSyD7kMn9ppOz357PfAHvcAQ3rgNnvH8M2zQ'
+	  },
+	  	function(data){
+	  		var nextPageToken = data.nextPageToken;
+	  		var prevPageToken = data.prevPageToken;
+
+	  		console.log(data);
+
+	  		$.each(data.items, function(i, item){
+	  			// Get Output
+	  			var output = getOutput(item);
+
+	  			//Display Results
+	  			$("#results").append(output);
+	  		});
+	  }
+	);
 }
