@@ -1,0 +1,36 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background: #e1e1e1 url(../img/creampaper.png);
+	color: #666;
+	font-family: "Seqoue", sans-serif;
+	line-height: 1.6em;
+}
+
+a{
+	color: #333;
+	text-decoration: none;
+}
+
+#container{
+	background: #fff;
+	margin: auto;
+	width: 740px;
+}
+
+.clearfix{
+	clear: both;
+}
+
+header{
+	background: #f4f4f4;
+	padding: 30px 20px;
+}
+
+header h1{
+	color: #000;
+	margin-bottom: 5px;
+}
