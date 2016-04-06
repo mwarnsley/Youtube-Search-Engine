@@ -45,7 +45,7 @@ function search(){
 			part: 'snippet, id',
 			q: q,
 			type:'video',
-			key: 'AIzaSyCvk3NNMQASZgFkCNxIp9jH-l8O0PXhDUo'},
+			key: 'AIzaSyD7kMn9ppOz357PfAHvcAQ3rgNnvH8M2zQ'},
 			function(data){
 				var nextPageToken = data.nextPageToken;
 				var prevPageToken = data.prevPageToken;
@@ -132,7 +132,7 @@ function prevPage(){
 			q: q,
 			pageToken: token,
 			type:'video',
-			key: 'AIzaSyD7kMn9ppOz357PfAHvcAQ3rgNnvH8M2zQ'},
+			key: 'AIzaSyCvk3NNMQASZgFkCNxIp9jH-l8O0PXhDUo'},
 			function(data){
 				var nextPageToken = data.nextPageToken;
 				var prevPageToken = data.prevPageToken;
